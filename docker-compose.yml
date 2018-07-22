@@ -1,0 +1,30 @@
+version: '2'
+services:
+  web:
+      image: nginx:latest
+      ports:
+          - "80:80"
+      volumes:
+          - ./code7:/code
+          - ./code5:/code/v5
+          - ./site.conf:/etc/nginx/conf.d/default.conf
+      networks:
+        - misitio-network
+
+  php5:
+      build: ./php5.6
+      volumes:
+          - ./code5:/code/v5
+      networks:
+        - misitio-network
+
+  php7:
+      image: php:7.1-fpm
+      volumes:
+          - ./code7:/code
+      networks:
+        - misitio-network
+
+networks:
+  misitio-network:
+    driver: bridge
